@@ -1,0 +1,34 @@
+Версия для предварительного ознакомления. Позволяет совершать платежи:
+Операторы состовой связи:
+1. UMS
+2. Ucell
+3. Beeline
+4. Perfectum
+5. UzMobile
+
+Интернет провайдеры:
+1. Turon telecom
+2. ISTV
+3. UzOnline
+4. TPS
+5. Sarkor Telecom
+6. Shark Telecom
+7. Fiber Net
+8. Beeline Internet
+9. EVO
+10. Nano Telecom
+11. Sonet
+12. Comet
+13. Netco
+14. Free Link
+
+WEB ресурсы:
+1. myjob.uz
+2. olx.uz
+3. addirect.uz
+4. onlinetv.uz
+
+Цифровое телевидение:
+1. UzDigital TV
+2. Telecom TV
+3. ITV

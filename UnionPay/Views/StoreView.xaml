@@ -1,0 +1,89 @@
+﻿<Page x:Name="page"
+    x:Class="UnionPay.Views.StoreView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnionPay.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loading="page_Loading" Loaded="page_Loaded">
+
+    <Page.Resources>
+        <DataTemplate x:Key="buttonTemplate">
+            <Button Click="Button_Click" BorderBrush="LightGray" BorderThickness="1" Margin="2" Background="Beige" Height="100" Width="100">
+                <StackPanel>
+                    <Image Source="{Binding Logo}" Height="60"/>
+                    <Border BorderBrush="DarkBlue" BorderThickness="1" Margin="0,0,0,1"/>
+                    <TextBlock Text="{Binding Name}" Foreground="DarkBlue" HorizontalAlignment="Center" FontWeight="ExtraLight" FontFamily="Verdana" FontSize="10"/>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid>
+                    <Image Margin="10,7,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo_transparent.png" Height="35" Width="80" />
+                </Grid>
+            </CommandBar.Content>
+            <!--Content="&#xED15;"-->
+            
+            <AppBarButton x:Name="feedbackButton" Label="Обратная связь" Visibility="Collapsed" FontSize="20" Click="feedbackButton_Click" >
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xED15;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Name="transferButton" Icon="People" Label="Перевод средств" Click="transferButton_Click" />
+            <AppBarButton Icon="ContactPresence" Label="Мои карты" Click="myCardsButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="560*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>-->
+        <!--Title="UNION PAY - ОБЪЕДИНЕННЫЕ ПЛАТЕЖИ"-->
+        <Pivot x:Name="pivot" SelectedIndex="{Binding PivotSelectedIndex, Mode=TwoWay}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" >
+
+            <PivotItem Header="МОБИЛЬНЫЙ">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    <GridView Margin="1,5,0,0" ItemsSource="{Binding MobileMerchants}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False" />
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem Header="ИНТЕРНЕТ">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    <GridView  Margin="1,5,0,0" ItemsSource="{Binding InternetMerchants}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False" />
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem Header="WEB">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    <GridView  Margin="1,5,0,0" ItemsSource="{Binding WEBMerchants}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False" />
+                </ScrollViewer>
+            </PivotItem>
+
+            <PivotItem Header="ТВ/КИНО">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    <GridView  Margin="1,5,0,0" ItemsSource="{Binding TVMerchants}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False"  />
+                </ScrollViewer>
+            </PivotItem>
+
+            <!--<PivotItem Header="КОММУНАЛЬНЫЕ УСЛУГИ">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    --><!--<GridView  Margin="1,5,0,0" ItemsSource="{Binding TVMerchants}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False"  />--><!--
+                </ScrollViewer>
+            </PivotItem>-->
+        </Pivot>
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <Image Margin="0,0,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="35" Width="80" />
+            <TextBlock Margin="0,15,0,0" Text="+"/>
+            <Image Margin="0,0,0,15" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/mbank_logo.png" Height="40" Width="100" />
+            <TextBlock Margin="5,15,0,20" Text="="/>
+            <Image Margin="-3,0,0,5" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo.png" Height="40" Width="100" />
+        </StackPanel>-->
+    </Grid>
+</Page>

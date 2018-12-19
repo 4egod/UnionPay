@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="UnionPay.Views.EditCardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnionPay.Views"
+    xmlns:controls="using:UnionPay.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Page.BottomAppBar>
+        <CommandBar >
+            <CommandBar.Content>
+                <Grid>
+                    <Image Margin="10,7,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo_transparent.png" Height="35" Width="80" />
+                </Grid>
+            </CommandBar.Content>
+            <AppBarButton Icon="Delete" Label="Удалить" Click="AppBarDelete_Click" Visibility="{Binding Card.DeleteVisibility}" TabIndex="5" />
+            <AppBarButton x:Name="BTNSave" Icon="Accept" Click="BTNSave_Click" Label="Сохранить" TabIndex="6" />
+            <AppBarButton Icon="Back" Label="Назад" Click="AppBarBack_Click" TabIndex="7" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid DataContext="{Binding Card}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="550*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>-->
+        <Pivot IsTabStop="True" FontFamily="verdana" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" >
+            <PivotItem  Header="РЕДАКТОР КАРТ" IsTabStop="True" TabIndex="-1">
+                <StackPanel BorderBrush="DarkBlue" BorderThickness="0,3,0,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <StackPanel Margin="10" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <TextBox x:Name="TBName" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Название карты:" PlaceholderText="Моя карта" Foreground="DarkBlue" Margin="10,5,10,0" FontWeight="SemiBold" TabIndex="0" KeyUp="TBName_KeyUp"  />
+                        <controls:TextBoxEx x:Name="TBNumber" Type="CardNumber" Text="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Номер карты" Foreground="DarkBlue" Margin="10,5,10,0" FontWeight="SemiBold" TabIndex="1" KeyUp="TBNumber_KeyUp"/>
+
+                        <TextBlock Text="Срок действия:" Margin="10,5,10,0"/>
+                        <StackPanel Margin="10,5,10,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="Год:" Margin="10,5,10,0"/>
+                            <ComboBox SelectedValue="{Binding ExpirationYear, Mode=TwoWay}" x:Name="CBYear" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="50" TabIndex="2" KeyUp="CBYear_KeyUp">
+                                <x:Int32>17</x:Int32>
+                                <x:Int32>18</x:Int32>
+                                <x:Int32>19</x:Int32>
+                                <x:Int32>20</x:Int32>
+                                <x:Int32>21</x:Int32>
+                                <x:Int32>22</x:Int32>
+                            </ComboBox>
+                            <TextBlock Text="Месяц:" Margin="10,5,10,0"/>
+                            <ComboBox SelectedValue="{Binding ExpirationMonth, Mode=TwoWay}" x:Name="CBMonth" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="50" TabIndex="3" KeyUp="CBMonth_KeyUp">
+                                <x:Int32>1</x:Int32>
+                                <x:Int32>2</x:Int32>
+                                <x:Int32>3</x:Int32>
+                                <x:Int32>4</x:Int32>
+                                <x:Int32>5</x:Int32>
+                                <x:Int32>6</x:Int32>
+                                <x:Int32>7</x:Int32>
+                                <x:Int32>8</x:Int32>
+                                <x:Int32>9</x:Int32>
+                                <x:Int32>10</x:Int32>
+                                <x:Int32>11</x:Int32>
+                                <x:Int32>12</x:Int32>
+                            </ComboBox>
+                        </StackPanel>
+                        <controls:TextBoxEx Type="PhoneNumber" x:Name="TBSMSInfoPhoneNumber" Text="{Binding SMSInfoPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Номер телефона SMS информирования:" Foreground="DarkBlue" Margin="10,5,10,10" FontWeight="SemiBold" TabIndex="4" KeyUp="TBSMSInfoPhoneNumber_KeyUp"/>
+
+                        <!--<StackPanel Margin="10,10,10,5" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Command="{Binding PayCommand}" BorderBrush="LightGray" BorderThickness="1" Background="Beige" Margin="0,0,5,5" Width="130" Content="Оплатить" FontSize="18" FontWeight="Bold" Foreground="DarkGreen" TabIndex="2"/>
+                        <Button Command="{Binding CancelCommand}" BorderBrush="LightGray" BorderThickness="1" Background="Beige" Margin="5,0,0,5" Width="130" Content="Отмена" FontSize="18" FontWeight="SemiBold" Foreground="DarkGray" TabIndex="3"/>
+                    </StackPanel>-->
+                    </StackPanel>
+
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <Image Margin="0,0,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="35" Width="80" />
+            <TextBlock Margin="0,15,0,0" Text="+"/>
+            <Image Margin="0,0,0,15" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/mbank_logo.png" Height="40" Width="100" />
+            <TextBlock Margin="5,15,0,20" Text="="/>
+            <Image Margin="-3,0,0,5" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo.png" Height="40" Width="100" />
+        </StackPanel>-->
+    </Grid>
+</Page>

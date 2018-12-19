@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="UnionPay.Views.MerchantView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnionPay.Views"
+    xmlns:controls="using:UnionPay.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded" >
+
+    <Page.BottomAppBar>
+        <CommandBar >
+            <CommandBar.Content>
+                <Grid>
+                    <Image Margin="10,7,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo_transparent.png" Height="35" Width="80" />
+                </Grid>
+            </CommandBar.Content>
+
+            <AppBarButton Command="{Binding Merchant.SubmintCommand}" IsEnabled="{Binding Merchant.SendEnabled}" Icon="Send" Label="Отправить счет на обработку" TabIndex="3" />
+            <AppBarButton x:Name="BTNApproove" Command="{Binding Merchant.ApprooveCommand}" IsEnabled="{Binding Merchant.ApprooveEnabled}" Icon="Accept" Label="Оплатить" TabIndex="5" />
+            <AppBarButton Command="{Binding Merchant.CancelCommand}" Icon="Back" Label="Назад" TabIndex="6" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState>
+                <VisualState.StateTriggers>
+                    
+
+                </VisualState.StateTriggers>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="550*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>-->
+        <Pivot Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" >
+            <PivotItem  Header="СЧЕТ НА ОПЛАТУ">
+                <StackPanel BorderBrush="DarkBlue" BorderThickness="0,3,0,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <StackPanel BorderBrush="LightGray" BorderThickness="1" Margin="0,10,0,10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Width="60" VerticalAlignment="Center" HorizontalAlignment="Center"  >
+                            <Image Source="{Binding Merchant.Logo}" Margin="5" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Image.RenderTransform>
+                                    <CompositeTransform Rotation="270" ScaleX="2" ScaleY="2"/>
+                                </Image.RenderTransform>
+                            </Image>
+                        </StackPanel>
+                        <StackPanel Width="270" BorderBrush="LightGray" BorderThickness="1,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <TextBox Text="{Binding Merchant.Name}" Header="Поставщик:" IsEnabled="{Binding Merchant.SendEnabled}" Margin="10,5,10,0" IsReadOnly="True" FontWeight="SemiBold" />
+                            <controls:TextBoxEx x:Name="TBId" Type="{Binding Merchant.PaySubjectType}" Text="{Binding Merchant.PaySubject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Merchant.SendEnabled}" Header="{Binding Merchant.PaySubjectName}" PlaceholderText="{Binding Merchant.PaySubjectHint}" Margin="10,5,10,0" FontWeight="SemiBold" TabIndex="0" KeyUp="TBId_KeyUp"/>
+                            <controls:TextBoxEx x:Name="TBAmount" Type="Curency" Text="{Binding Merchant.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Merchant.SendEnabled}" Header="Сумма пополнения:" Margin="10,5,10,0" PlaceholderText="Сумма (от 1,000 до 100,000 сум)" MaxLength="7" FontWeight="SemiBold" TabIndex="1" KeyUp="TBAmount_KeyUp"/>
+                            <ComboBox x:Name="CBCard" IsEnabled="{Binding Merchant.SendEnabled}" HorizontalAlignment="Stretch" ItemsSource="{Binding Cards}" SelectedItem="{Binding Merchant.Card, Mode=TwoWay}" Header="Оплатить с карты:"  Margin="10,5,10,5" TabIndex="2">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                            <TextBlock Text=" (" />
+                                            <TextBlock Text="{Binding Number}" />
+                                            <TextBlock Text=")" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <controls:TextBoxEx x:Name="TBSMSCode" Type="SmsCode" MaxLength="6" Text="{Binding Merchant.SMSCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Merchant.ApprooveEnabled}" Header="СМС подтверждение:" Margin="10,5,10,10" PlaceholderText="012345" TabIndex="4" FontWeight="SemiBold" KeyUp="TBSMSCode_KeyUp"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <ProgressBar Visibility="{Binding Merchant.ProgressVisibility}" Grid.Row="1" VerticalAlignment="Bottom" IsIndeterminate="True" />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <Image Margin="0,0,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="35" Width="80" />
+            <TextBlock Margin="0,15,0,0" Text="+"/>
+            <Image Margin="0,0,0,15" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/mbank_logo.png" Height="40" Width="100" />
+            <TextBlock Margin="5,15,0,20" Text="="/>
+            <Image Margin="-3,0,0,5" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo.png" Height="40" Width="100" />
+        </StackPanel>-->
+
+        
+    </Grid>
+</Page>

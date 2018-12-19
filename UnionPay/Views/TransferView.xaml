@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="UnionPay.Views.TransferView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnionPay.Views"
+    xmlns:converters="using:UnionPay.Converters"
+    xmlns:controls="using:UnionPay.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <converters:BoolToVisabilityConverter x:Key="boolToVisabilityConverter"/>
+    </Page.Resources>
+    
+    <Page.BottomAppBar>
+        <CommandBar >
+            <CommandBar.Content>
+                <Grid>
+                    <Image Margin="10,7,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo_transparent.png" Height="35" Width="80" />
+                </Grid>
+            </CommandBar.Content>
+
+            <AppBarButton x:Name="SubmitButton" Command="{Binding Transfer.SubmitCommand}" IsEnabled="{Binding Transfer.IsSubmitEnabled}" Icon="Send" Label="Отправить счет на обработку" TabIndex="3" />
+            <AppBarButton x:Name="ApproveButton" Command="{Binding Transfer.ApproveCommand}" IsEnabled="{Binding Transfer.IsApproveEnabled}" Icon="Accept" Label="Оплатить" TabIndex="5" />
+            <AppBarButton Command="{Binding Transfer.CancelCommand}" Icon="Back" Label="Назад" TabIndex="6" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="550*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>-->
+        <Pivot IsTabStop="False" FontFamily="verdana" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" >
+            <PivotItem IsTabStop="False" Header="ПЕРЕВОД СРЕДСТВ">
+                <StackPanel BorderBrush="DarkBlue" BorderThickness="0,3,0,3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <StackPanel BorderBrush="LightGray" BorderThickness="1" Margin="0,10,0,10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Width="60" VerticalAlignment="Center" HorizontalAlignment="Center"  >
+                            <Image Source="ms-appx:///Assets/Images/payme.png" Margin="5" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Image.RenderTransform>
+                                    <CompositeTransform Rotation="270" ScaleX="2" ScaleY="2"/>
+                                </Image.RenderTransform>
+                            </Image>
+                        </StackPanel>
+                        <StackPanel Width="270" BorderBrush="LightGray" BorderThickness="1,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <controls:TextBoxEx x:Name="RecipientTextBox" Type="CardNumber" Text="{Binding Transfer.Recipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Получатель:" IsHitTestVisible="{Binding Transfer.IsSubmitEnabled}" IsReadOnly="{Binding Transfer.IsApproveEnabled}" Margin="10,5,10,0" FontWeight="SemiBold" TabIndex="0" KeyUp="RecipientTextBox_KeyUp" />
+                            <ComboBox x:Name="CardComboBox" IsHitTestVisible="{Binding Transfer.IsSubmitEnabled}" HorizontalAlignment="Stretch" ItemsSource="{Binding Cards}" SelectedItem="{Binding Transfer.Card, Mode=TwoWay}" Header="Перевести с карты:"  Margin="10,5,10,5" TabIndex="1" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                            <TextBlock Text=" (" />
+                                            <TextBlock Text="{Binding Number}" />
+                                            <TextBlock Text=")" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <controls:TextBoxEx x:Name="AmountTextBox" Type="Curency" Text="{Binding Transfer.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="{Binding Transfer.IsSubmitEnabled}" IsReadOnly="{Binding Transfer.IsApproveEnabled}" Header="Сумма перевода:" Margin="10,5,10,0" PlaceholderText="Сумма (от 5,000 до 1,000,000)" FontWeight="SemiBold" TabIndex="2" KeyUp="AmountTextBox_KeyUp" />
+                            <controls:TextBoxEx x:Name="CommissionTextBox" Type="Curency" Text="{Binding Transfer.Commission}" IsHitTestVisible="False" PlaceholderText="(Доступно после обработки)" Header="Комиссия:" Margin="10,5,10,0" IsReadOnly="True" FontWeight="SemiBold" />
+                            <controls:TextBoxEx x:Name="TotalTextBox" Type="Curency" Text="{Binding Transfer.Total}" IsHitTestVisible="False" PlaceholderText="(Доступно после обработки)" Header="Итого к списанию:" Margin="10,5,10,0" IsReadOnly="True" FontWeight="SemiBold" />
+                            <controls:TextBoxEx x:Name="SMSTextBox" Type="SmsCode" MaxLength="6" Text="{Binding Transfer.SMSCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Transfer.IsApproveEnabled}" Header="СМС подтверждение:" Margin="10,5,10,10" PlaceholderText="0123456" TabIndex="4" FontWeight="SemiBold" KeyUp="SMSTextBox_KeyUp"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <ProgressBar Visibility="{Binding Transfer.ProgressVisibility}" Grid.Row="1" VerticalAlignment="Bottom" IsIndeterminate="True" />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <Image Margin="0,0,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="35" Width="80" />
+            <TextBlock Margin="0,15,0,0" Text="+"/>
+            <Image Margin="0,0,0,15" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/mbank_logo.png" Height="40" Width="100" />
+            <TextBlock Margin="5,15,0,20" Text="="/>
+            <Image Margin="-3,0,0,5" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo.png" Height="40" Width="100" />
+        </StackPanel>-->
+
+
+    </Grid>
+</Page>

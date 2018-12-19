@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="UnionPay.Views.MyCardsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnionPay.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <JumpListItemBackgroundConverter x:Key="JumpListItemBackgroundConverter"/>
+        <DataTemplate x:Key="buttonTemplate">
+            <Button Click="Button_Click" BorderBrush="LightGray" BorderThickness="1" Margin="1" Background="Beige" Height="100" Width="160">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!--<Image Margin="5" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="40"/>-->
+                    <TextBlock Text="{Binding Name}" Foreground="DarkBlue" FontWeight="Bold"/>
+                    <Border BorderBrush="DarkBlue" BorderThickness="1" Margin="0,5,0,5"/>
+
+                    <TextBlock Text="{Binding Number}" Foreground="DarkBlue"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ExpirationMonth}"  Foreground="DarkBlue"/>
+                        <TextBlock Text="/" Foreground="DarkBlue" />
+                        <TextBlock Text="{Binding ExpirationYear}"  Foreground="DarkBlue"/>
+                        <Image Margin="58,2,0,0" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="20"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid>
+                    <Image Margin="10,7,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo_transparent.png" Height="35" Width="80" />
+                </Grid>
+            </CommandBar.Content>
+            <AppBarButton Icon="Add" Label="Добавить карту" Click="AppBarAdd_Click"/>
+            <AppBarButton Icon="GoToStart" Label="Перейти к платежам" Click="AppBarHome_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="550*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>-->
+        <Pivot FontFamily="verdana" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+            <PivotItem  Header="МОИ КАРТЫ">
+                <ScrollViewer BorderBrush="DarkBlue" BorderThickness="0,3,0,3" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled">
+                    <GridView DataContext="{Binding}" Margin="1,5,0,0" ItemsSource="{Binding Cards}" ItemTemplate="{StaticResource buttonTemplate}" HorizontalAlignment="Center" Background="Transparent" ShowsScrollingPlaceholders="False" SelectionMode="None" IsMultiSelectCheckBoxEnabled="False"  />
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+        
+        <!--<StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <Image Margin="0,0,0,7"  VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/uzcard_logo.png" Height="35" Width="80" />
+            <TextBlock Margin="0,15,0,0" Text="+"/>
+            <Image Margin="0,0,0,15" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/mbank_logo.png" Height="40" Width="100" />
+            <TextBlock Margin="5,15,0,20" Text="="/>
+            <Image Margin="-3,0,0,5" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Images/unionpay_logo.png" Height="40" Width="100" />
+        </StackPanel>-->
+    </Grid>
+</Page>
